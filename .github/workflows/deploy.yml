@@ -55,4 +55,4 @@ jobs:
 
           # Detener cualquier contenedor existente y desplegar el nuevo
           sudo docker ps -q --filter "name=index" | grep -q . && docker stop index && docker rm index || true
-          sudo docker run -d --name index -p 80:80 kmamaguana/tercera-pagina:latest
+          sudo docker run -d --name index -p 80:80 epgarzonr/index:latest
