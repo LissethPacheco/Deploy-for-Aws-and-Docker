@@ -23,9 +23,9 @@ jobs:
     - name: Get the version number
       id: version
       run: |
-        VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"  # Usando la fecha como ejemplo, pero puedes incrementarlo manualmente
+        VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"  
 
-        echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV  # Exporta la versión para usarla en pasos posteriores
+        echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV  
 
     - name: Build and push Docker image
       run: |
@@ -33,9 +33,9 @@ jobs:
 
         docker build . --file Dockerfile --tag epgarzonr/index:${VERSION_TAG} --tag epgarzonr/index:${LATEST_TAG}
         
-        # Hacer push de las imágenes a DockerHub
+
         docker push epgarzonr/index:${VERSION_TAG}
-        docker push epgarzonr/index:${LATEST_TAG}
+
 
   deploy:
     name: Deploy to EC2
@@ -52,10 +52,8 @@ jobs:
         port: 22 
         
         script: |
-          sudo apt update -y
-          sudo apt install -y docker
-          sudo service docker start
-          sudo usermod -a -G docker ec2-user
+          sudo docker --version || sudo apt install -y docker
+          sudo service docker start || true
 
           sudo docker pull epgarzonr/index:latest
 
