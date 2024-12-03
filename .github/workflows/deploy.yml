@@ -29,12 +29,11 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        LATEST_TAG="latest"
 
-        docker build . --file Dockerfile --tag epgarzonr/index:${VERSION_TAG} --tag epgarzonr/index:${LATEST_TAG}
+        docker build . --file Dockerfile --tag epgarzonr/index:${VERSION_TAG} --tag epgarzonr/index:latest
         
         docker push epgarzonr/index:${VERSION_TAG}
-        docker push epgarzonr/index:${LATEST_TAG}
+        docker push epgarzonr/index:latest
 
   deploy:
     name: Deploy to EC2
